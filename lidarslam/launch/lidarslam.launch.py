@@ -13,7 +13,7 @@ def generate_launch_description():
             get_package_share_directory('lidarslam'),
             'param',
             'lidarslam.yaml'))
-    
+
     rviz_param_dir = launch.substitutions.LaunchConfiguration(
         'rviz_param_dir',
         default=os.path.join(
@@ -25,14 +25,14 @@ def generate_launch_description():
         package='scanmatcher',
         executable='scanmatcher_node',
         parameters=[main_param_dir],
-        remappings=[('/input_cloud','/velodyne_points')],
+        remappings=[('/input_cloud','/lidar_points')],
         output='screen'
         )
 
     tf = launch_ros.actions.Node(
         package='tf2_ros',
         executable='static_transform_publisher',
-        arguments=['0','0','0','0','0','0','1','base_link','velodyne']
+        arguments=['0','-0.44','0.2344','0','0','0','1','base_link','hesai_lidar']
         )
 
 
@@ -42,7 +42,7 @@ def generate_launch_description():
         parameters=[main_param_dir],
         output='screen'
         )
-    
+
     rviz = launch_ros.actions.Node(
         package='rviz2',
         executable='rviz2',
